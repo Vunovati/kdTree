@@ -77,20 +77,22 @@ public class KdTree {
 
     private void insertAsChildOfParent(Node newNode, Node parent) {
         Point2D p = newNode.p;
-        if (parent.vertical) {
-            if (p.x() < parent.p.x()) {
-                parent.lb = newNode;
+        if (p.x() != parent.p.x() || p.y() != parent.p.y()) {
+            if (parent.vertical) {
+                if (p.x() < parent.p.x()) {
+                    parent.lb = newNode;
+                } else {
+                    parent.rt = newNode;
+                }
             } else {
-                parent.rt = newNode;
+                if (p.y() < parent.p.y()) {
+                    parent.lb = newNode;
+                } else {
+                    parent.rt = newNode;
+                }
             }
-        } else {
-            if (p.y() < parent.p.y()) {
-                parent.lb = newNode;
-            } else {
-                parent.rt = newNode;
-            }
+            size++;
         }
-        size++;
     }
 
     private RectHV getLeftPartOfRect(Point2D p, RectHV rect) {
