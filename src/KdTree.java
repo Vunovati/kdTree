@@ -116,18 +116,20 @@ public class KdTree {
     private void drawNode(Node node) {
         if (node != null) {
             StdDraw.setPenColor(StdDraw.BLACK);
-            StdDraw.setPenRadius(.001);
+            StdDraw.setPenRadius(.01);
             node.p.draw();
 
             if (node.vertical) {
                 StdDraw.setPenRadius(.003);
                 StdDraw.setPenColor(StdDraw.RED);
+
+                StdDraw.line(node.p.x(), node.rect.ymin(), node.p.x(), node.rect.ymax());
             } else {
                 StdDraw.setPenRadius(.003);
                 StdDraw.setPenColor(StdDraw.BLUE);
+                StdDraw.line(node.rect.xmin(), node.p.y(), node.rect.xmax(), node.p.y());
             }
 
-            node.rect.draw();
 
             drawNode(node.rt);
             drawNode(node.lb);
@@ -233,8 +235,6 @@ public class KdTree {
         kdTree.insert(p3);
         System.out.println(kdTree + " size is: " + kdTree.size());
         kdTree.insert(p4);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p5);
         System.out.println(kdTree + " size is: " + kdTree.size());
         kdTree.insert(p5);
         System.out.println(kdTree + " size is: " + kdTree.size());
