@@ -30,7 +30,7 @@ public class PointSET {
     public void draw() {
         StdDraw.setPenColor(StdDraw.BLACK);
         StdDraw.setPenRadius(.01);
-        for (Point2D point: points) {
+        for (Point2D point : points) {
             point.draw();
         }
     }
@@ -39,7 +39,7 @@ public class PointSET {
     public Iterable<Point2D> range(RectHV rect) {
         Set<Point2D> pointsInRectangle = new TreeSet<Point2D>();
 
-        for (Point2D point: points) {
+        for (Point2D point : points) {
             if (pointBetweenBoundaries(rect, point)) {
                 pointsInRectangle.add(point);
             }
@@ -57,11 +57,16 @@ public class PointSET {
 
     // a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D p) {
-        Point2D nearestNeighbor = points.iterator().next();
+        Point2D nearestNeighbor;
+        if (points.isEmpty()) {
+            nearestNeighbor = null;
+        } else {
+            nearestNeighbor = points.iterator().next();
 
-        for (Point2D point: points) {
-            if (p.distanceSquaredTo(point) < p.distanceSquaredTo(nearestNeighbor)) {
-                nearestNeighbor = point;
+            for (Point2D point : points) {
+                if (p.distanceSquaredTo(point) < p.distanceSquaredTo(nearestNeighbor)) {
+                    nearestNeighbor = point;
+                }
             }
         }
 
@@ -76,7 +81,7 @@ public class PointSET {
         pointSET.insert(p);
         pointSET.insert(p2);
 
-        RectHV rectHV = new RectHV(1,1, 4, 4);
+        RectHV rectHV = new RectHV(1, 1, 4, 4);
 
         System.out.println("point " + p + " between: " + pointSET.pointBetweenBoundaries(rectHV, p));
         System.out.println("point " + p2 + " between: " + pointSET.pointBetweenBoundaries(rectHV, p2));
