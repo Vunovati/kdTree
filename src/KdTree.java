@@ -240,12 +240,8 @@ public class KdTree {
         return node != null && node.rect.distanceSquaredTo(p) < p.distanceSquaredTo(nearestSoFar);
     }
 
-    public String size() {
-        return String.valueOf(size);
-    }
-
-    private String pointBetweenBoundaries(RectHV rectHV, Point2D p) {
-        return null;
+    public int size() {
+        return size;
     }
 
     private static class Node {
