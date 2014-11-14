@@ -1,9 +1,6 @@
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created by evlaada on 11/12/14.
- */
 public class KdTree {
 
     private Node root;
@@ -285,34 +282,10 @@ public class KdTree {
         System.out.println(kdTree + " size is: " + kdTree.size());
         kdTree.insert(p5);
         System.out.println(kdTree + " size is: " + kdTree.size());
-//
-//        System.out.println(kdTree + " contains " + p3 + " :" + kdTree.contains(p3));
         Point2D missingPoint = new Point2D(.1, .1);
-//        System.out.println(kdTree + " contains " + missingPoint + " :" + kdTree.contains(missingPoint));
-//
         Point2D missingPoint2 = new Point2D(.99, .9999999999);
-//        System.out.println(kdTree + " contains " + missingPoint2 + " :" + kdTree.contains(missingPoint2));
-//
+
         System.out.println(kdTree + " nearest " + missingPoint + " :" + kdTree.nearest(missingPoint));
         System.out.println(kdTree + " nearest " + missingPoint2 + " :" + kdTree.nearest(missingPoint2));
-//
-
-//        kdTree.draw();
-
-
-//        String filename = args[0];
-//        In in = new In(filename);
-//
-//
-//        // initialize the two data structures with point from standard input
-//        KdTree kdtree2 = new KdTree();
-//        while (!in.isEmpty()) {
-//            double x = in.readDouble();
-//            double y = in.readDouble();
-//            Point2D p = new Point2D(x, y);
-//            kdtree2.insert(p);
-//        }
-//
-//        kdtree2.draw();
     }
 }
