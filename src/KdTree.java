@@ -7,21 +7,21 @@ public class KdTree {
     private int size;
 
     public KdTree() {
+        root = new Node();
+        root.vertical = true;
+        root.rect = new RectHV(0, 0, 1, 1);
     }
 
     public void insert(Point2D p) {
-        if (root == null) {
-            createRootNode(p);
+        if (root.p == null) {
+            initializeRootNode(p);
         } else {
             traverseTowardsPointPosition(p, root);
         }
     }
 
-    private void createRootNode(Point2D p) {
-        root = new Node();
-        root.vertical = true;
+    private void initializeRootNode(Point2D p) {
         root.p = p;
-        root.rect = new RectHV(0, 0, 1, 1);
         size++;
     }
 
