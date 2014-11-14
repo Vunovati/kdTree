@@ -43,8 +43,11 @@ public class KdTree {
 
     private boolean pointSmallerThanNode(Point2D p, Node node) {
         boolean b;
-        if (node.vertical) b = p.x() < node.p.x();
-        else b = p.y() < node.p.y();
+        if (node.vertical) {
+            b = p.x() < node.p.x();
+        } else {
+            b = p.y() < node.p.y();
+        }
         return b;
     }
 
@@ -76,22 +79,20 @@ public class KdTree {
 
     private void insertAsChildOfParent(Node newNode, Node parent) {
         Point2D p = newNode.p;
-        if (p.x() != parent.p.x() || p.y() != parent.p.y()) {
-            if (parent.vertical) {
-                if (p.x() < parent.p.x()) {
-                    parent.lb = newNode;
-                } else {
-                    parent.rt = newNode;
-                }
+        if (parent.vertical) {
+            if (p.x() < parent.p.x()) {
+                parent.lb = newNode;
             } else {
-                if (p.y() < parent.p.y()) {
-                    parent.lb = newNode;
-                } else {
-                    parent.rt = newNode;
-                }
+                parent.rt = newNode;
             }
-            size++;
+        } else {
+            if (p.y() < parent.p.y()) {
+                parent.lb = newNode;
+            } else {
+                parent.rt = newNode;
+            }
         }
+        size++;
     }
 
     private RectHV getLeftPartOfRect(Point2D p, RectHV rect) {
@@ -200,7 +201,7 @@ public class KdTree {
     }
 
     private boolean nodeWithinRect(Node node, RectHV rect) {
-        return node.p.x() < rect.xmax() && node.p.x() > rect.xmin() && node.p.y() < rect.ymax() && node.p.y() > rect.ymin();
+        return node.p.x() <= rect.xmax() && node.p.x() >= rect.xmin() && node.p.y() <= rect.ymax() && node.p.y() >= rect.ymin();
     }
 
     public Point2D nearest(Point2D query) {
@@ -216,12 +217,12 @@ public class KdTree {
         }
 
         if (isLeaf(node)) {
-                return nearestSoFar;
+            return nearestSoFar;
         }
 
         if (node.lb != null && node.lb.rect.contains(target)) {
-            Point2D nearestLeft  = findNearest(node.lb, target, nearestSoFar);
-            return findNearest(node.rt, target, nearestLeft );
+            Point2D nearestLeft = findNearest(node.lb, target, nearestSoFar);
+            return findNearest(node.rt, target, nearestLeft);
         } else {
             Point2D nearestRight = findNearest(node.rt, target, nearestSoFar);
             return findNearest(node.lb, target, nearestRight);
@@ -263,29 +264,62 @@ public class KdTree {
 
     // unit testing of the methods (optional)
     public static void main(String[] args) {
-        KdTree kdTree = new KdTree();
+//        KdTree kdTree = new KdTree();
+//
+//        Point2D p1 = new Point2D(.7, .2);
+//        Point2D p2 = new Point2D(.5, .4);
+//        Point2D p3 = new Point2D(.2, .3);
+//        Point2D p4 = new Point2D(.4, .7);
+//        Point2D p5 = new Point2D(.9, .6);
+//
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        kdTree.insert(p1);
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        kdTree.insert(p2);
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        kdTree.insert(p3);
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        kdTree.insert(p4);
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        kdTree.insert(p5);
+//        System.out.println(kdTree + " size is: " + kdTree.size());
+//        Point2D missingPoint = new Point2D(.1, .1);
+//        Point2D missingPoint2 = new Point2D(.99, .9999999999);
+//
+//        System.out.println(kdTree + " nearest " + missingPoint + " :" + kdTree.nearest(missingPoint));
+//        System.out.println(kdTree + " nearest " + missingPoint2 + " :" + kdTree.nearest(missingPoint2));
+//
+        String filename = args[0];
+        In in = new In(filename);
+//
+//
+//        StdDraw.show(0);
 
-        Point2D p1 = new Point2D(.7, .2);
-        Point2D p2 = new Point2D(.5, .4);
-        Point2D p3 = new Point2D(.2, .3);
-        Point2D p4 = new Point2D(.4, .7);
-        Point2D p5 = new Point2D(.9, .6);
+        // initialize the data structures with N points from standard input
+        KdTree kdtree2 = new KdTree();
+        while (!in.isEmpty()) {
+            double x = in.readDouble();
+            double y = in.readDouble();
+            Point2D p = new Point2D(x, y);
+            kdtree2.insert(p);
 
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p1);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p2);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p3);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p4);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        kdTree.insert(p5);
-        System.out.println(kdTree + " size is: " + kdTree.size());
-        Point2D missingPoint = new Point2D(.1, .1);
-        Point2D missingPoint2 = new Point2D(.99, .9999999999);
+            if (!kdtree2.contains(p))
+                System.out.println(p);
+        }
 
-        System.out.println(kdTree + " nearest " + missingPoint + " :" + kdTree.nearest(missingPoint));
-        System.out.println(kdTree + " nearest " + missingPoint2 + " :" + kdTree.nearest(missingPoint2));
+        System.out.println(kdtree2.size());
+
+
+        in = new In(filename);
+        while (!in.isEmpty()) {
+            double x = in.readDouble();
+            double y = in.readDouble();
+            Point2D p = new Point2D(x, y);
+
+            if (!kdtree2.contains(p))
+                System.out.println(p);
+        }
+
+        kdtree2.draw();
     }
 }
