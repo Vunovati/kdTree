@@ -82,17 +82,20 @@ public class KdTree {
         if (parent.vertical) {
             if (p.x() < parent.p.x()) {
                 parent.lb = newNode;
-            } else {
+                size++;
+            } else if(p.x() > parent.p.x()) {
                 parent.rt = newNode;
+                size++;
             }
         } else {
             if (p.y() < parent.p.y()) {
                 parent.lb = newNode;
-            } else {
+                size++;
+            } else if(p.y() > parent.p.y()) {
                 parent.rt = newNode;
+                size++;
             }
         }
-        size++;
     }
 
     private RectHV getLeftPartOfRect(Point2D p, RectHV rect) {
@@ -181,19 +184,19 @@ public class KdTree {
             }
 
             if (node.vertical) {
-                if (rect.xmax() > node.p.x()) {
+                if (rect.xmax() >= node.p.x()) {
                     searchAndAddPointsInRange(points, rect, node.rt);
                 }
 
-                if (rect.xmin() < node.p.x()) {
+                if (rect.xmin() <= node.p.x()) {
                     searchAndAddPointsInRange(points, rect, node.lb);
                 }
             } else {
-                if (rect.ymax() > node.p.y()) {
+                if (rect.ymax() >= node.p.y()) {
                     searchAndAddPointsInRange(points, rect, node.rt);
                 }
 
-                if (rect.ymin() < node.p.y()) {
+                if (rect.ymin() <= node.p.y()) {
                     searchAndAddPointsInRange(points, rect, node.lb);
                 }
             }
