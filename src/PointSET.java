@@ -1,4 +1,3 @@
-import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -59,10 +58,9 @@ public class PointSET {
     // a nearest neighbor in the set to point p; null if the set is empty
     public Point2D nearest(Point2D p) {
         Point2D nearestNeighbor = points.iterator().next();
-        Comparator<Point2D> comparator = p.DISTANCE_TO_ORDER;
 
         for (Point2D point: points) {
-            if (comparator.compare(point, nearestNeighbor) < 0) {
+            if (p.distanceSquaredTo(point) < p.distanceSquaredTo(nearestNeighbor)) {
                 nearestNeighbor = point;
             }
         }
